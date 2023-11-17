@@ -73,3 +73,27 @@ FROM customers
 INNER JOIN orders 
 USING (customer_id);
 
+#Especificamente nos piden el nombre de cada compañía cliente(UK) junto con el número de pedidos.
+
+SELECT 
+    c.company_name AS nombre_cliente,
+    COUNT(o.order_id) AS numero_de_pedidos
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+WHERE c.country = 'UK'
+GROUP BY c.company_name
+ORDER BY numero_de_pedidos DESC;
+
+#Empresas de UK y sus pedidos:
+#También nos han pedido que obtengamos todos los nombres de las empresas 
+#cliente de Reino Unido (tengan pedidos o no) junto con los ID de todos los pedidos 
+#que han realizado y la fecha del pedido.
+
+SELECT 
+    c.company_name AS nombre_cliente,
+    o.order_id AS id_pedido,
+    o.order_date AS fecha_pedido
+FROM customers c
+LEFT JOIN orders o ON c.customer_id = o.customer_id
+WHERE c.country = 'UK'
+ORDER BY nombre_cliente, fecha_pedido;
